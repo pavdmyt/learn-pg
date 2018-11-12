@@ -3,7 +3,7 @@ Play with Postgres
 
 ## Setup
 
-1. Make sure you have **docker** and **docker-compose** installed.
+1. Make sure you have **docker** installed.
 2. Clone this repo: `$ git clone https://github.com/pavdmyt/learn-pg.git`
 3. `cd` into `learn-pg` directory
 4. Execute `./run.sh start`

@@ -5,14 +5,17 @@
 #
 
 # Place where Postgres data is stored at localhost
-export PG_DATA="$HOME/.postgres_data"
+PG_DATA="$HOME/.postgres_data"
 
 # Postgres version
-export PG_VERSION="11"
+PG_VERSION="11"
 
 # Postgres user and password
-export PG_USER="postgres"
-export PG_PWD="123"
+PG_USER="postgres"
+PG_PWD="123"
+
+# Container name
+PG_CTNR_NAME="learn_postgres"
 
 
 function print_usage () {
@@ -28,11 +31,16 @@ function start () {
         mkdir -p "$PG_DATA"
     fi
 
-    docker-compose up -d
+    docker run \
+        --name "$PG_CTNR_NAME" \
+        -v "${PG_DATA:-~/pg_data}:/var/lib/postgresql/data" \
+        -e POSTGRES_PASSWORD="$PG_PWD" \
+        -e POSTGRES_USER="$PG_USER" \
+        -d postgres:${PG_VERSION:-11}-alpine
 }
 
 function stop () {
-    docker-compose down
+    docker stop "$PG_CTNR_NAME" && docker rm "$PG_CTNR_NAME"
 }
 
 function main () {
